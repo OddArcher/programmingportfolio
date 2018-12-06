@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Richard Czerniak Portfolio</title>
+    <!-- CSS Links-->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/w3.css">
+    <!-- JS Links-->
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script src="../../js/processing.min.js"></script>
+    <!-- Other Links-->
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Orbitron|Russo+One|VT323" rel="stylesheet">
+</head>
+<body>
+    <div class="container notbackground">
+        <!-- The Title -->
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <h1 id="headertext">Richard Czerniak</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-2"></div>	
+              <div class="col-md-2"></div>	
+              <div class="col-md-2 text-center block-center">
+                <h2 id="subheader" title="To The Pages" onclick="openNav()">Ping</h2>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2"></div>	
+              <div class="col-md-1"></div>	
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <hr>
+                <br>
+              </div>
+            </div>
+        <!-- The Title -->
+        <!-- First Section -->	
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10 text-center block-center content ">
+                <script type="application/processing" data-processing-target="pjs">
+// More Vars
+int start = 0;
+int p1score1 = 0;
+int p1score2 = 0;
+int p2score1 = 0;
+int p2score2 = 0;
+float multiplyer;
+int bounce = 0;
+int gain = 2;
+int disco = 0;
+int seizure = 0;
+int randomize = 0;
+
+// Player 1
+int p1x = 300;
+int p1y = 650;
+int p1x2 = p1x + 100;
+int p1w = 100;
+int p1l = 20;
+int p1ri = 0;
+int p1le = 0;
+int p1s = 8;
+
+// Player 2
+int p2x = 300;
+int p2y = 25;
+int p2x2 = p2x + 100;
+int p2w = 100;
+int p2l = 20;
+int p2ri = 0;
+int p2le = 0;
+int p2s = 8;
+
+// Ball
+int bx = 350;
+int by = 350;
+int bsi = 20;
+int bhspeed = 0;
+int bvspeed = 0;
+
+// Wall
+int w1x = 0;
+int w1w = 5;
+int w2x = 695;
+int w2w = 5;
+
+//Color
+int color1 = 255;
+int color2 = 255;
+int color3 = 255;
+
+// Setup
+void setup() {
+  size(700,700);
+}
+
+// Draw
+void draw() {
+  fill(color1,color2,color3);
+  if (disco == 1) {
+    fill(random(255), random(255), random(255));
+  }
+  if (p1score1 >= 10) {
+    p1score1 = 0;
+    p1score2++;
+  }
+  if (p2score1 >= 10) {
+    p2score1 = 0;
+    p2score2++;
+  }
+  if(seizure == 0){
+    background(0);    
+  }
+  if(seizure == 1){
+    background(random(255),random(255),random(255));
+  }
+  //Redo Variables
+  p1x2 = p1x + p1w;
+  p2x2 = p2x + p2w;
+  // Ball Collisions
+  if (bx >= w2x) {
+    bhspeed = -bhspeed;
+  }
+  if (bx <= w1x) {
+    bhspeed = -bhspeed;
+  }
+  if (by >= p1y && by < p1y + p1l && bx >= p1x && bx <= p1x2) {
+    if (bounce == 0) {
+      if (random(1) >= 0.5) {
+        bhspeed = floor(random(-6, -3));
+      } else {
+        bhspeed = floor(random(-6, -3));
+      }
+      if(bx > (p1x+(p1w/2)) && bx <= p1x2){
+        if(bhspeed < 0){
+          bhspeed = -bhspeed;
+        }
+      }
+      if(bx < (p1x+(p1w/2)) && bx >= p1x){
+        if(bhspeed > 0){
+          bhspeed = -bhspeed;
+        }
+      }
+      if (random(1) >= 0.5) {
+        bvspeed = floor(random(-6, -3));
+      } else {
+        bvspeed = floor(random(-6, -3));
+      }
+      bounce = 1;
+    } else {
+      if(bx > (p1x+(p1w/2)) && bx <= p1x2){
+        if(bhspeed < 0){
+          bhspeed = -bhspeed;
+        }
+      }
+      if(bx < (p1x+(p1w/2)) && bx >= p1x){
+        if(bhspeed > 0){
+          bhspeed = -bhspeed;
+        }
+      }
+      bvspeed = -bvspeed;
+      bvspeed -= gain;
+      bhspeed -= gain;
+    }
+  }
+  if (by <= p2y + p2l && by > p2y && bx >= p2x && bx <= p2x2) {
+    if (bounce == 0) {
+      if (random(1) >= 0.5) {
+        bhspeed = floor(random(6, 3));
+      } else {
+        bhspeed = floor(random(6, 3));
+      }
+      
+      if (random(1) >= 0.5) {
+        bvspeed = floor(random(6, 3));
+      } else {
+        bvspeed = floor(random(6, 3));
+      }
+      bounce = 1;
+    } else {
+      if(bx > (p2x+(p2w/2)) && bx <= p2x2){
+      if(bhspeed < 0){
+        bhspeed = -bhspeed;
+      }
+    }
+    if(bx < (p2x+(p2w/2)) && bx >= p2x){
+      if(bhspeed > 0){
+        bhspeed = -bhspeed;
+      }
+    }
+
+      bvspeed = -bvspeed;
+      bvspeed += gain;
+      bhspeed += gain;
+    }
+  }
+  if (by > 700) {
+    bhspeed = 0;
+    bvspeed = 0;
+    bx = 350;
+    by = 350;
+    p2score1++;
+    start = 0;
+    bounce = 0;
+    color1 = floor(random(255));
+    color2 = floor(random(255));
+    color3 = floor(random(255));
+  }
+  if (by < 0) {
+    bhspeed = 0;
+    bvspeed = 0;
+    bx = 350;
+    by = 350;
+    p1score1++;
+    start = 0;
+    bounce = 0;
+    color1 = floor(random(255));
+    color2 = floor(random(255));
+    color3 = floor(random(255));
+  }
+  // Number 10
+  if (p1score2 != 1 && p1score2 != 4) {
+    //Top
+    rect(60, 375, 40, 5);
+  }
+  if (p1score2 != 0 && p1score2 != 1 && p1score2 != 7) {
+    //Middle
+    rect(60, 413, 40, 5);
+  }
+  if (p1score2 != 1 && p1score2 != 4 && p1score2 != 7) {
+    //Bottom
+    rect(60, 450, 40, 5);
+  }
+  if (p1score2 != 1 && p1score2 != 2 && p1score2 != 3 && p1score2 != 7) {
+    //Top Left
+    rect(60, 380, 5, 35);
+  }
+  if (p1score2 != 5 && p1score2 != 6) {
+    //Top Right
+    rect(95, 380, 5, 35);
+  }
+  if (p1score2 != 1 && p1score2 != 3 && p1score2 != 4 && p1score2 != 5 && p1score2 != 7 && p1score2 != 9) {
+    //Bottom Left
+    rect(60, 415, 5, 35);
+  }
+  if (p1score2 != 2) {
+    //Bottom Right
+    rect(95, 415, 5, 35);
+  }
+  // Number 1
+  if (p1score1 != 1 && p1score1 != 4) {
+    //Top
+    rect(60 + 50, 375, 40, 5);
+  }
+  if (p1score1 != 0 && p1score1 != 1 && p1score1 != 7) {
+    //Middle
+    rect(60 + 50, 413, 40, 5);
+  }
+  if (p1score1 != 1 && p1score1 != 4 && p1score1 != 7) {
+    //Bottom
+    rect(60 + 50, 450, 40, 5);
+  }
+  if (p1score1 != 1 && p1score1 != 2 && p1score1 != 3 && p1score1 != 7) {
+    //Top Left
+    rect(60 + 50, 380, 5, 35);
+  }
+  if (p1score1 != 5 && p1score1 != 6) {
+    //Top Right
+    rect(95 + 50, 380, 5, 35);
+  }
+  if (p1score1 != 1 && p1score1 != 3 && p1score1 != 4 && p1score1 != 5 && p1score1 != 7 && p1score1 != 9) {
+    //Bottom Left
+    rect(60 + 50, 415, 5, 35);
+  }
+  if (p1score1 != 2) {
+    //Bottom Right
+    rect(95 + 50, 415, 5, 35);
+  }
+  // Number 2 10
+  if (p2score2 != 1 && p2score2 != 4) {
+    //Top
+    rect(600 - 50, 250, 40, 5);
+  }
+  if (p2score2 != 0 && p2score2 != 1 && p2score2 != 7) {
+    //Middle
+    rect(600 - 50, 288, 40, 5);
+  }
+  if (p2score2 != 1 && p2score2 != 4 && p2score2 != 7) {
+    //Bottom
+    rect(600 - 50, 325, 40, 5);
+  }
+  if (p2score2 != 1 && p2score2 != 2 && p2score2 != 3 && p2score2 != 7) {
+    //Top Left
+    rect(600 - 50, 255, 5, 35);
+  }
+  if (p2score2 != 5 && p2score2 != 6) {
+    //Top Right
+    rect(635 - 50, 255, 5, 35);
+  }
+  if (p2score2 != 1 && p2score2 != 3 && p2score2 != 4 && p2score2 != 5 && p2score2 != 7 && p2score2 != 9) {
+    //Bottom Left
+    rect(600 - 50, 290, 5, 35);
+  }
+  if (p2score2 != 2) {
+    //Bottom Right
+    rect(635 - 50, 290, 5, 35);
+  }
+  // Number 2
+  if (p2score1 != 1 && p2score1 != 4) {
+    //Top
+    rect(600, 250, 40, 5);
+  }
+  if (p2score1 != 0 && p2score1 != 1 && p2score1 != 7) {
+    //Middle
+    rect(600, 288, 40, 5);
+  }
+  if (p2score1 != 1 && p2score1 != 4 && p2score1 != 7) {
+    //Bottom
+    rect(600, 325, 40, 5);
+  }
+  if (p2score1 != 1 && p2score1 != 2 && p2score1 != 3 && p2score1 != 7) {
+    //Top Left
+    rect(600, 255, 5, 35);
+  }
+  if (p2score1 != 5 && p2score1 != 6) {
+    //Top Right
+    rect(635, 255, 5, 35);
+  }
+  if (p2score1 != 1 && p2score1 != 3 && p2score1 != 4 && p2score1 != 5 && p2score1 != 7 && p2score1 != 9) {
+    //Bottom Left
+    rect(600, 290, 5, 35);
+  }
+  if (p2score1 != 2) {
+    //Bottom Right
+    rect(635, 290, 5, 35);
+  }
+
+  //Wall
+  rect(w1x, 0, w2w, 700);
+  rect(w2x, 0, w2w, 700);
+  //Line
+  rect(30, 345, 40, 10);
+  rect(90, 345, 40, 10);
+  rect(150, 345, 40, 10);
+  rect(210, 345, 40, 10);
+  rect(270, 345, 40, 10);
+  rect(330, 345, 40, 10);
+  rect(390, 345, 40, 10);
+  rect(450, 345, 40, 10);
+  rect(510, 345, 40, 10);
+  rect(570, 345, 40, 10);
+  rect(630, 345, 40, 10);
+  //Player 1
+  rect(p1x, p1y, p1w, p1l);
+  //Player 2
+  rect(p2x, p2y, p2w, p2l);
+  //Ball
+  ellipse(bx, by, bsi, bsi);
+  //Move Stuffs
+  if (p1x < 600) {
+    p1x += p1ri;
+  }
+  if (p1x > 0) {
+    p1x -= p1le;
+  }
+
+  if (p2x < 600) {  
+    p2x += p2ri;
+  }
+  if (p2x > 0) {    
+    p2x -= p2le;
+  }
+  if (start == 1) {
+    bx += bhspeed;
+    by += bvspeed;
+  }
+  if(bvspeed >= 10){
+    disco = 1;
+  }
+  if(bvspeed >= 20){
+    seizure = 1;
+  }
+  if(bvspeed == 0){
+    seizure = 0;
+    disco = 0;
+  }
+}
+
+void keyPressed() {
+  //Player 1 Move
+  if (key == 'd' || key == 'D') {
+    p1ri = p1s;
+  }
+  if (key == 'a' || key == 'A') {
+    p1le = p1s;
+  }
+
+  //Player 2 Move
+  if (key == 'l' || key == 'L') {
+    p2ri = p2s;
+  }
+  if (key == 'j' || key == 'J') {
+    p2le = p2s;
+  }
+  // Start
+  if (key == 'g' || key == 'G') {
+    if (start == 0) {
+      start = 1;
+      bounce = 0;
+      if (random(1) >= 0.5) {
+        bvspeed = 5;
+      } else {
+        bvspeed = -5;
+      }
+    }
+  }
+  if (key == 't' || key == 'T') {
+    if (disco == 0) {
+      disco = 1;
+    } else {
+      disco = 0;
+    }
+  }
+  if (key == 'y' || key == 'Y') {
+    if (seizure == 0) {
+      seizure = 1;
+    } else {
+      seizure = 0;
+    }
+    if (disco == 0) {
+      disco = 1;
+    } else {
+      disco = 0;
+    }
+  }
+}
+void keyReleased() {
+  //Player 1 Move
+  if (key == 'd' || key == 'D') {
+    p1ri = 0;
+  }
+  if (key == 'a' || key == 'A') {
+    p1le = 0;
+  }
+
+  //Player 2 Move
+  if (key == 'l' || key == 'L') {
+    p2ri = 0;
+  }
+  if (key == 'j' || key == 'J') {
+    p2le = 0;
+  }
+}
+                </script>
+              <canvas id = "pjs"></canvas>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+<!-- Space -->	
+		<div class="row">
+        <div class="col-md-12">
+          <br>
+          <br>
+        </div>
+      </div>
+  <!-- Space -->	
+<!-- Description -->	
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10 text-center block-center content ">
+    <br>
+    <p class="contenttext">Player 1 (Bottom) - A/D</p>
+    <p class="contenttext">Player 2 (Top) - J/K</p>
+    <p class="contenttext">Serve - G</p>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+<!-- Description -->	
+<!-- Space -->	
+<div class="row">
+	<div class="col-md-12">
+		<br>
+		<br>
+	</div>
+</div>
+<!-- Space -->	
+        </div>
+<!-- Overlay -->
+<div id="myNav" class="overlay">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Back</a>
+	<div class="overlay-content">
+		<a href="../../index.html">Main Page</a>
+		<a href="../bkgrndpage/index.html">BKGRND</a>
+		<a href="../pingpage/index.html">LSPaint</a>
+		<a href="../pingpage/index.html" id = "selected"><u>Ping</u></a>
+		<a href="../galaxypage/index.html">Galaxy Intruders</a>
+		<a href="../c@rrionpage/index.html">C@rrion</a>
+		<a href="../panzerpage/index.html">Panzer Problems</a>
+		<!-- <a href="otherpages/oubliettepage/index.html">Oubliette</a> -->
+		<a href="../ping2page/index.html">Ping 2.0</a>
+	</div>
+</div>
+<!-- Overlay -->
+</body>
+</html>

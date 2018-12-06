@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Richard Czerniak Portfolio</title>
+    <!-- CSS Links-->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/w3.css">
+    <!-- JS Links-->
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script src="../../js/processing.min.js"></script>
+    <!-- Other Links-->
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Orbitron|Russo+One|VT323" rel="stylesheet">
+</head>
+<body>
+    <div class="container notbackground">
+        <!-- The Title -->
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <h1 id="headertext">Richard Czerniak</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2"></div>	
+              <div class="col-md-1"></div>	
+              <div class="col-md-6 text-center block-center">
+                <h2 id="subheader" title="To The Pages" onclick="openNav()">Galaxy Intruders</h2>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-2"></div>	
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <hr>
+                <br>
+              </div>
+            </div>
+        <!-- The Title -->
+        <!-- First Section -->	
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10 text-center block-center content ">
+                <script type="application/processing" data-processing-target="pjs">
+                  //Bullets
+                  ArrayList <Bullet> bullets;
+                  int bw = 5;
+                  int bl = 10;
+                  int bspeed = 7;
+                  //Player
+                  int px = 800/2;
+                  int py = 660-20;
+                  int pw = 40;
+                  int pl = 15;
+                  int pleftside = px - (pw/2);
+                  int prightside = px + (pw/2);
+                  int pupside = py - (pl/2);
+                  int pdownside = py + (pl/2);
+                  int gx = px;
+                  int gy = pupside;
+                  int gs = 15;
+                  int pvspeed = 0;
+                  int psn = 3; 
+                  int palarm = 0;
+                  int pshootdelay = 30;
+                  //Global
+                  int r = 36;
+                  int g = 191;
+                  int b = 56;
+                  int count = 0;
+                  int score = 0;
+                  int lives = 3;
+                  int alienskilled = 0;
+                  boolean lose = false;
+                  //Bonus Alien
+                  ArrayList <Laser> lasers;
+                  int lspeed = 7;
+                  float boax = 900;
+                  float boay = 80;
+                  float boahspeed = 2;
+                  float boaalarm = -1;
+                  float boatime = 300;
+                  boolean boa = false;
+                  //Aliens
+                  ArrayList <Alien> aliens;
+                  int aw = 40;
+                  int al = 30;
+                  int aliendistance = 40;
+                  int aliendirection = 0;
+                  int aliendelay = 0;
+                  int aliendelaynumber = 60;
+                  int aspx = 80;
+                  int aspy = 80;
+                  int ay = 0;
+                  int ax = 0;
+                  int hasmoved = 0;
+                  int numaliens = 32;
+                  float multi = 1;
+                  float sub = 1;
+                  boolean gross = false;
+                  float range = 160;
+                  float killalarm = -1;
+                  int ew = 100;
+                  int el = 100;
+                  float ba1x = 2*(800/8);
+                  float ba1y = 580;
+                  float ba1w = 80;
+                  float ba1l = 60;
+                  float ba2x = 800/2;
+                  float ba2y = 580;
+                  float ba2w = 80;
+                  float ba2l = 60;
+                  float ba3x = 6*(800/8);
+                  float ba3y = 580;
+                  float ba3w = 80;
+                  float ba3l = 60;
+                  float basub = 10;
+                  float bal = 60;
+                  boolean win = false;
+                  float shootfreq = 10;
+                  float winalarm = -1;
+                  float message = int(random(4));
+                  float start = 0;
+                  class Alien {
+                    int x;
+                    int y;
+                    int m;
+                    int d;
+                    int dead;
+                    Alien(int tx, int ty, int tm, int td) {
+                      m = tm;
+                      d = td;
+                      x = tx+ (2*(m*aliendistance));
+                      y = ty + (d*aliendistance);
+                      dead = 0;
+                    }
+                    void showAliens() {
+                      if (x!=2000) {
+                        fill(r, g, b);
+                        rect(x+ax, y + ay, aw, al);
+                        if (gross == false) {
+                  
+                        }
+                        if (gross == true) {
+                  
+                        }
+                      }
+                    }
+                    void moveAliens() {
+                      if (x!=2000) {
+                  
+                        if (aliendelay == 0) {
+                  
+                          if (x+aliendistance+ax>=800) {
+                            aliendirection = 1;
+                            ay+=aliendistance;
+                          }
+                          if (x-aliendistance+ax<=0) {
+                            aliendirection = 0;
+                            ay+=aliendistance;
+                          }
+                          if (aliendirection==0 && hasmoved == 0) {
+                            ax+=(aliendistance/numaliens)*multi;
+                          }
+                          if (aliendirection==1 && hasmoved == 0) {
+                            ax-=(aliendistance/numaliens)*multi;
+                          }
+                        }
+                      }
+                      if (x==2000 && dead == 0) {
+                        score+=50;
+                        numaliens-=1;
+                        aliendelaynumber-=sub;
+                        dead = 1;
+                        print("BOOM ");
+                      }
+                    }
+                    void destroyAliens() {
+                      x = 2000;
+                    }
+                    void refresh() {
+                      if (y+ay>=550 && killalarm < 0 && x!=2000) {
+                  
+                        killalarm= 20;
+                        print("--Intruded-- ");
+                      }
+                    }
+                    void shootLasers() {
+                      if ((x+ax)>=(px-(pw/2)-range) && (x+ax)<=(px+(pw/2)+range) && aliendelay == 0 && random(100) <= shootfreq && count >= 60) {
+                        Laser current = new Laser(x+ax, y+ay);
+                        lasers.add(current);
+                      }
+                    }
+                  }
+                  
+                  class Bullet//bullet class
+                  {
+                    int x;
+                    int y;
+                    Bullet(int tx, int ty)
+                    {
+                      x = tx;
+                      y = ty;
+                    }
+                    void show() {
+                      fill(r, g, b);
+                      ellipse(x, y, bw, bl);
+                    }
+                    void move() {
+                      y -= bspeed;
+                      if (x > (ba1x-(ba1w/2)) && x < (ba1x+(ba1w/2)) && y > (ba1y-(ba1l/2)) && y < (ba1y+(ba1l/2))) {
+                        ba1l-=basub;
+                        x = 3000;
+                      }
+                      if (x > (ba2x-(ba2w/2)) && x < (ba2x+(ba2w/2)) && y > (ba2y-(ba2l/2)) && y < (ba2y+(ba2l/2))) {
+                        ba2l-=basub;
+                        x = 3000;
+                      }
+                      if (x > (ba3x-(ba3w/2)) && x < (ba3x+(ba3w/2)) && y > (ba3y-(ba3l/2)) && y < (ba3y+(ba3l/2))) {
+                        ba3l-=basub;
+                        x = 3000;
+                      }
+                      if (x > (ba3x-(ba3w/2)) && x < (ba3x+(ba3w/2)) && y > (ba3y-(ba3l/2)) && y < (ba3y+(ba3l/2))) {
+                        ba3l-=basub;
+                        x = 3000;
+                      }
+                    }
+                    void destroyBullets() {
+                      x = 3000;
+                    }
+                  }
+                  
+                  class Laser//bullet class
+                  {
+                    int x;
+                    int y;
+                    Laser(int tx, int ty)
+                    {
+                      x = tx;
+                      y = ty;
+                    }
+                    void show() {
+                      rect(x, y, bw, bl);
+                    }
+                    void move() {
+                      y += bspeed;
+                      if (x > (ba1x-(ba1w/2)) && x < (ba1x+(ba1w/2)) && y > (ba1y-(ba1l/2)) && y < (ba1y+(ba1l/2))) {
+                        ba1l-=basub;
+                        x = 3000;
+                      }
+                      if (x > (ba2x-(ba2w/2)) && x < (ba2x+(ba2w/2)) && y > (ba2y-(ba2l/2)) && y < (ba2y+(ba2l/2))) {
+                        ba2l-=basub;
+                        x = 3000;
+                      }
+                      if (x > (ba3x-(ba3w/2)) && x < (ba3x+(ba3w/2)) && y > (ba3y-(ba3l/2)) && y < (ba3y+(ba3l/2))) {
+                        ba3l-=basub;
+                        x = 3000;
+                      }
+                    }
+                    void destroyLasers() {
+                      x = 4000;
+                    }
+                  }
+                  
+                  void setup() {
+                    size(800, 660);
+                    frameRate(60);
+                    bullets = new ArrayList();
+                    aliens = new ArrayList();
+                    lasers = new ArrayList();
+                    createAliens();
+                  }
+                  
+                  void draw() {
+                    if(start == 0){
+                      background(0,0,0);
+                      fill(r,g,b);
+                      textSize(50);
+                        text("GALAXY INTRUDERS", 150, 300);
+                        textSize(30);
+                        text("Press J to start", 300, 400);
+                    }
+                    if(start == 1){
+                    if (numaliens == 0) {
+                      if (winalarm < 0) {
+                        winalarm = 180;
+                      }
+                    }
+                    if (lose == false && win == false) {
+                      //ALARMS
+                      if (palarm != 0) {
+                        palarm--;
+                      }
+                      if (aliendelay != 0) {
+                        aliendelay--;
+                      }
+                      //SETUP
+                      background(0, 0, 0);
+                      moveAll();
+                      showAll();
+                      destroy();
+                  nlose();
+                      kill();
+                      clear(100);
+                      fill(r, g, b);
+                      stroke(r, g, b);
+                      gx = px;
+                      //Draw SCORESHEET
+                      strokeWeight(1);
+                      line(0, 60, 800, 60);
+                      textSize(40);
+                      text("Score - ", 10, 40);
+                      text(score, 160, 40);
+                      text("Lives - ", 260, 40);
+                      text(lives, 400, 40);
+                      //DRAW PLAYER
+                      rectMode(CENTER);
+                      noStroke();
+                      rect(px, py, pw, pl);
+                      noStroke();
+                      ellipse(gx, gy, gs, gs);
+                      if (palarm == 0) {
+                        rect(gx, gy, bw, bl+10);
+                      }
+                      pleftside = px - (pw/2);
+                      prightside = px + (pw/2);
+                      pupside = py - (pl/2);
+                      pdownside = py + (pl/2);
+                      //PLAYER MOVE
+                      if (pleftside < 0) {
+                        px = 0+(pw/2);
+                      }
+                      if (prightside > 800) {
+                        px = 800-(pw/2);
+                      }
+                      px += pvspeed;
+                      if (pvspeed > psn) {
+                        pvspeed = psn;
+                      }
+                      if (pvspeed < -psn) {
+                        pvspeed = -psn;
+                      }
+                      rect(ba1x, ba1y, ba1w, ba1l);
+                      rect(ba2x, ba2y, ba2w, ba2l);
+                      rect(ba3x, ba3y, ba3w, ba3l);
+                      //OTHER
+                      count++;
+                      if (aliendelay == 0) {
+                        aliendelay = aliendelaynumber;
+                        if (numaliens > 0) {
+                          print("dun ");
+                        }
+                        if ( gross == true) {
+                          gross = false;
+                        } else if ( gross == false) {
+                          gross = true;
+                        }
+                      }
+                      if(count>=boatime && random(100)<=10){
+                        boa = true;
+                      }
+                      else{
+                        boaalarm+=boatime;
+                      }
+                      if ( boa == true){
+                        boax -= boahspeed;
+                        //rect(boax,boay,aw,al);
+                        if(boax <= 0-aw){
+                          boaalarm = boatime;
+                          boa = false;
+                        }
+                      }
+                      if(boa == false){
+                        boax = 900;
+                      }
+                      boaalarm--;
+                    }
+                    if (lose == true) {
+                      background(0, 0, 0);
+                      fill(r, g, b);
+                      stroke(r, g, b);
+                      textSize(90);
+                      text("Game Over", 150, 300);
+                      textSize(30);
+                      text("Your Score:" + score, 300, 400);
+                    }
+                    if (winalarm > 0) {
+                      fill(random(255), random(255), random(255));
+                      textSize(60);
+                      if (message == 0) {
+                        text("YOU WON", 10, 300);
+                      }
+                      else if (message == 1) {
+                        text("ALIENS KILLED", 10, 300);
+                      }
+                      else if (message == 2) {
+                        text("CONGRATULATIONS", 10, 300);
+                      }
+                      else if (message == 3 && random(100) <= 10) {
+                        text("LIAMSUX", 10, 300);
+                      }
+                      else if (message == 3) {
+                        text("YOU KILLED AN ENTIRE RACE", 10, 300);
+                      }
+                      else if (message == 4){
+                        text("WOOOO", 10, 300);
+                      }
+                      winalarm--;
+                    }
+                    if (winalarm == 0) {
+                      win=false;
+                      lose=false;
+                      count=0;
+                      aliendelay+=9;
+                      ay=0;
+                      ax=0;
+                      createAliens();
+                      numaliens = 32;
+                      message = int(random(4));
+                      winalarm=-1;
+                    }
+                    if (killalarm>0) {
+                      fill(random(255), 0, 0);
+                      ellipse(px, py, ew, el);
+                      killalarm--;
+                    }
+                    if (killalarm==0) {
+                      lives-=1;
+                      ay=0;
+                      ax=0;
+                      ba1l = bal;
+                      ba2l = bal;
+                      ba3l = bal;
+                      px=800/2;
+                      py=660-20;
+                      print("--Intruded-- ");
+                      aliendelay+=6;
+                      killalarm = -1;
+                      count = 0;
+                    }
+                  }
+                  }
+                  
+                  void keyPressed() {
+                    if (killalarm==-1) {
+                      if (key == 'a' || key == 'A') {
+                        pvspeed = -psn;
+                      }
+                      if (key == 'd' || key == 'D') {
+                        pvspeed = psn;
+                      }
+                      if (key == 'j' || key == 'J') {
+                        if (palarm == 0) {
+                          Bullet current = new Bullet(gx, gy);
+                          bullets.add(current);
+                          print("pew ");
+                          palarm = pshootdelay;
+                        }
+                        if(start==0){
+                          start=1;
+                        }
+                      }
+                    }
+                  }
+                  
+                  void keyReleased() {
+                    if (key == 'a' || key == 'A') {
+                      pvspeed = 0;
+                    }
+                    if (key == 'd' || key == 'D') {
+                      pvspeed = 0;
+                    }
+                  }
+                  
+                  
+                  
+                  void moveAll()
+                  {
+                    for (Bullet current : bullets)
+                    {
+                      current.move();
+                    }
+                    for (Laser l : lasers)
+                    {
+                      l.move();
+                      l.show();
+                    }
+                    for (Alien a : aliens) {
+                      a.moveAliens();
+                      a.refresh();
+                      a.shootLasers();
+                    }
+                  }
+                  void showAll() {
+                    for (Bullet current : bullets)
+                    {
+                      current.show();
+                    }
+                    for (Alien alive : aliens)
+                    {
+                      alive.showAliens();
+                    }
+                  }
+                  
+                  void clear(int maxLength) {
+                    while (bullets.size() > maxLength)
+                    {
+                      bullets.remove(0);
+                    }
+                  }
+                  
+                  void createAliens() {
+                    Alien a1 = new Alien(aspx, aspy, 0, 0);
+                    Alien a2 = new Alien(aspx, aspy, 1, 0);
+                    Alien a3 = new Alien(aspx, aspy, 2, 0);
+                    Alien a4 = new Alien(aspx, aspy, 3, 0);
+                    Alien a5 = new Alien(aspx, aspy, 4, 0);
+                    Alien a6 = new Alien(aspx, aspy, 5, 0);
+                    Alien a7 = new Alien(aspx, aspy, 6, 0);
+                    Alien a8 = new Alien(aspx, aspy, 7, 0);
+                    Alien b1 = new Alien(aspx, aspy, 0, 1);
+                    Alien b2 = new Alien(aspx, aspy, 1, 1);
+                    Alien b3 = new Alien(aspx, aspy, 2, 1);
+                    Alien b4 = new Alien(aspx, aspy, 3, 1);
+                    Alien b5 = new Alien(aspx, aspy, 4, 1);
+                    Alien b6 = new Alien(aspx, aspy, 5, 1);
+                    Alien b7 = new Alien(aspx, aspy, 6, 1);
+                    Alien b8 = new Alien(aspx, aspy, 7, 1);
+                    Alien c1 = new Alien(aspx, aspy, 0, 2);
+                    Alien c2 = new Alien(aspx, aspy, 1, 2);
+                    Alien c3 = new Alien(aspx, aspy, 2, 2);
+                    Alien c4 = new Alien(aspx, aspy, 3, 2);
+                    Alien c5 = new Alien(aspx, aspy, 4, 2);
+                    Alien c6 = new Alien(aspx, aspy, 5, 2);
+                    Alien c7 = new Alien(aspx, aspy, 6, 2);
+                    Alien c8 = new Alien(aspx, aspy, 7, 2);
+                    Alien d1 = new Alien(aspx, aspy, 0, 3);
+                    Alien d2 = new Alien(aspx, aspy, 1, 3);
+                    Alien d3 = new Alien(aspx, aspy, 2, 3);
+                    Alien d4 = new Alien(aspx, aspy, 3, 3);
+                    Alien d5 = new Alien(aspx, aspy, 4, 3);
+                    Alien d6 = new Alien(aspx, aspy, 5, 3);
+                    Alien d7 = new Alien(aspx, aspy, 6, 3);
+                    Alien d8 = new Alien(aspx, aspy, 7, 3);
+                    aliens.add(a1);
+                    aliens.add(a2);
+                    aliens.add(a3);
+                    aliens.add(a4);
+                    aliens.add(a5);
+                    aliens.add(a6);
+                    aliens.add(a7);
+                    aliens.add(a8);
+                    aliens.add(b1);
+                    aliens.add(b2);
+                    aliens.add(b3);
+                    aliens.add(b4);
+                    aliens.add(b5);
+                    aliens.add(b6);
+                    aliens.add(b7);
+                    aliens.add(b8);
+                    aliens.add(c1);
+                    aliens.add(c2);
+                    aliens.add(c3);
+                    aliens.add(c4);
+                    aliens.add(c5);
+                    aliens.add(c6);
+                    aliens.add(c7);
+                    aliens.add(c8);
+                    aliens.add(d1);
+                    aliens.add(d2);
+                    aliens.add(d3);
+                    aliens.add(d4);
+                    aliens.add(d5);
+                    aliens.add(d6);
+                    aliens.add(d7);
+                    aliens.add(d8);
+                  }
+                  
+                  void destroy() {
+                    for (Alien a : aliens) {
+                      for (Bullet b : bullets) {
+                        if (b.x > (a.x - (aw/2)+ax) && b.x < (a.x + (aw/2)+ax) && b.y > (a.y - (al/2)+ ay) && b.y < (a.y + (al/2))+ ay) {
+                          a.destroyAliens();
+                          b.destroyBullets();
+                        }
+                      }
+                    }
+                  }
+                  
+                  void kill() {
+                    for (Laser l : lasers) {
+                      if (l.x > (px-(pw/2)) && l.x < (px+(pw/2)) && l.y > (py-(pl/2)) && l.y < (py+(pl/2))) {
+                        l.destroyLasers();
+                        killalarm = 60;
+                        print("KABOOM ");
+                      }
+                    }
+                  }
+                  
+                  void nlose() {
+                    if (lives<=0) {
+                      lose=true;
+                    }
+                  }
+                </script>
+              <canvas id = "pjs"></canvas>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          <!-- Space -->	
+		<div class="row">
+        <div class="col-md-12">
+          <br>
+          <br>
+        </div>
+      </div>
+  <!-- Space -->	
+  <!-- Description -->	
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10 text-center block-center content ">
+    <br>
+    <p class="contenttext">Move - A/D</p>
+    <p class="contenttext">Shoot - J</p>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+<!-- Description -->	
+<!-- Space -->	
+<div class="row">
+	<div class="col-md-12">
+		<br>
+		<br>
+	</div>
+</div>
+<!-- Space -->	
+        </div>
+<!-- Overlay -->
+<div id="myNav" class="overlay">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Back</a>
+	<div class="overlay-content">
+		<a href="../../index.html">Main Page</a>
+		<a href="../bkgrndpage/index.html">BKGRND</a>
+		<a href="../pingpage/index.html">LSPaint</a>
+		<a href="../pingpage/index.html">Ping</a>
+		<a href="" id = "selected"><u>Galaxy Intruders</u></a>
+		<a href="../c@rrionpage/index.html">C@rrion</a>
+		<a href="../panzerpage/index.html">Panzer Problems</a>
+		<!-- <a href="otherpages/oubliettepage/index.html">Oubliette</a> -->
+		<a href="../ping2page/index.html">Ping 2.0</a>
+	</div>
+</div>
+<!-- Overlay -->
+</body>
+</html>

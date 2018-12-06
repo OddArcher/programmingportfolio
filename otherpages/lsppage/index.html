@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Richard Czerniak Portfolio</title>
+    <!-- CSS Links-->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/w3.css">
+    <!-- JS Links-->
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script src="../../js/processing.min.js"></script>
+    <!-- Other Links-->
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Orbitron|Russo+One|VT323" rel="stylesheet">
+</head>
+<body>
+    <div class="container notbackground">
+        <!-- The Title -->
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <h1 id="headertext">Richard Czerniak</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-2"></div>	
+              <div class="col-md-2"></div>	
+              <div class="col-md-2 text-center block-center">
+                <h2 id="subheader" title="To The Pages" onclick="openNav()">LSPaint</h2>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2"></div>	
+              <div class="col-md-1"></div>	
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <hr>
+                <br>
+              </div>
+            </div>
+        <!-- The Title -->
+        <!-- First Section -->	
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10 text-center block-center content ">
+                <script type="application/processing" data-processing-target="pjs">
+                  //Defaults
+                  int brushwd = 20;
+                  int brushld = 20;
+                  int brushrd = 0;
+                  int brushgd = 0;
+                  int brushbd = 0;
+                  int thicknessd = 0;
+                  int athicknessd = 2;
+                  int backgroundrd = 255;
+                  int backgroundgd = 255;
+                  int backgroundbd = 255;
+                  int brushstrokerd = 0;
+                  int brushstrokegd = 0;
+                  int brushstrokebd = 0;
+                  int cursord = 2;
+                  //Brush Stuff
+                  int brushw = brushwd;
+                  int brushl = brushld;
+                  int brushr = brushrd;
+                  int brushg = brushgd;
+                  int brushb = brushbd;
+                  int brushf = 0;
+                  //Details
+                  int nstroke = 0;
+                  int thickness = thicknessd;
+                  int athickness = athicknessd;
+                  int brushstroker = brushstrokerd;
+                  int brushstrokeg = brushstrokegd;
+                  int brushstrokeb = brushstrokebd;
+                  //Modes
+                  int cursor = cursord;
+                  //Background Stuff
+                  int backgroundr = backgroundrd;
+                  int backgroundg = backgroundgd;
+                  int backgroundb = backgroundbd;
+                  int backgroundf = 0;
+                  //HUDs
+                  int huds = 1;
+                  int hudw = 100;
+                  //Misc
+                  int mp = 0;
+                  int erase = 1;
+                  int clear = 0;
+                  int diff = 10;
+                  
+                  
+                  void setup() {
+                    frameRate(60);
+                    size(800, 800);
+                    background(255, 255, 255);
+                  }
+                  
+                  void draw() {
+                    rectMode(CENTER);
+                    //Fill em up
+                    if (clear == 1) {
+                      background(backgroundr, backgroundg, backgroundb);
+                    }
+                    if (erase%2 == 0) {
+                      noStroke();
+                      fill(backgroundr, backgroundg, backgroundb);
+                    }
+                    if (erase%2 != 0) {
+                      fill(brushr, brushg, brushb);
+                      stroke(brushstroker, brushstrokeg, brushstrokeb);
+                      if(nstroke == 0){
+                      noStroke();
+                      }
+                      if(nstroke > 0){
+                      stroke(brushstroker, brushstrokeg, brushstrokeb);
+                      strokeWeight(nstroke - 1);
+                      }
+                    } 
+                    //AWWWW SNAP ITS THE CURSOR
+                    if (mp == 1) {
+                      if (cursor == 0) {
+                        point(mouseX, mouseY);
+                      }
+                  
+                      if (cursor == 1) {
+                        //Sod Off Liam
+                        line(pmouseX, pmouseY, mouseX, mouseY);
+                      }
+                  
+                      if (cursor == 2) {
+                        ellipse(mouseX, mouseY, brushw, brushl);
+                      }
+                  
+                      if (cursor == 3) {
+                        rect(mouseX, mouseY, brushw, brushl);
+                      }  
+                  
+                      if (cursor == 4) {
+                        triangle(mouseX, mouseY-(brushl/2), mouseX+(brushw/2), mouseY+(brushl/2), mouseX-(brushw/2), mouseY+(brushl/2));
+                      }
+                    }
+                    //HUD
+                    rectMode(CORNER);
+                    //Actual Hud
+                    stroke(255);
+                    strokeWeight(0);
+                    stroke(brushstroker, brushstrokeg, brushstrokeb);
+                    fill(0);
+                    rect(0, 0, hudw, 900);
+                    fill(backgroundr, backgroundg, backgroundb);
+                    rect(10, 10, 80, 80);
+                    if (erase%2 == 0) {
+                      fill(255, 255, 255);
+                      stroke(0, 0, 0);
+                      strokeWeight(thickness);
+                    }
+                    if (erase%2 != 0) {
+                      fill(brushr, brushg, brushb);
+                      stroke(brushstroker, brushstrokeg, brushstrokeb);
+                      if(nstroke == 0){
+                      noStroke();
+                      }
+                      if(nstroke > 0){
+                      stroke(brushstroker, brushstrokeg, brushstrokeb);
+                      strokeWeight(nstroke - 1);
+                      }
+                    }
+                    if (cursor == 0) {
+                      point(50, 50);
+                    }
+                    if (cursor == 1) {
+                      line(30, 50, 70, 50);
+                    }
+                    if (cursor == 2) {
+                      ellipse(50, 50, brushw, brushl);
+                    }
+                    if (cursor == 3) {
+                      rectMode(CENTER);
+                      rect(50, 50, brushw, brushl);
+                    }  
+                    if (cursor == 4) {
+                      triangle(50, 50-(brushl/2), 50+(brushw/2), 50+(brushl/2), 50-(brushw/2), 50+(brushl/2));
+                    }
+                    strokeWeight(0);
+                    rectMode(CORNER);
+                    //Backgrounds
+                    fill(255, 255, 255);
+                    text("Background", 10, 110);
+                    //Red
+                    fill(255, 0, 0);
+                    rect(10, 115, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 115, 50, 125);
+                    //Green
+                    fill(0, 255, 0);
+                    rect(10, 130, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 130, 50, 140);
+                    //Blue
+                    fill(0, 0, 255);
+                    rect(10, 145, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 145, 50, 155);
+                    fill(255, 255, 0);
+                    text("R" + backgroundr + " G" + backgroundg + " B" + backgroundb, 5, 170);
+                    fill(255, 255, 255);
+                    //Clear Button
+                    text("Clear/Update", 10, 185);
+                    fill(255, 255, 255);
+                    rect(10, 190, 80, 10); 
+                    //Reset Button
+                    text("Reset", 10, 210);
+                    fill(255, 255, 255);
+                    rect(10, 215, 80, 10);
+                    //Brush Colors
+                    fill(255, 255, 255);
+                    text("Brush Color", 10, 235);
+                    //Red
+                    fill(255, 0, 0);
+                    rect(10, 240, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 240, 50, 250);
+                    //Green
+                    fill(0, 255, 0);
+                    rect(10, 255, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 255, 50, 265);
+                    //Blue
+                    fill(0, 0, 255);
+                    rect(10, 270, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 270, 50, 280);
+                    fill(255, 255, 0);
+                    text("R-" + brushr + " G-" + brushg + " B-" + brushb, 5, 295);
+                    //Brush Size
+                    fill(255, 255, 255);
+                    text("Brush Width", 10, 310);
+                    fill(255, 255, 255);
+                    rect(10, 315, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 315, 50, 325);
+                    fill(255, 255, 0);
+                    text(brushw, 45, 340-2);
+                    //Brush Selection
+                    fill(255, 255, 255);    
+                    text("Brush Length", 10, 350);
+                    rect(10, 355, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 355, 50, 365);
+                    fill(255, 255, 0);
+                    text(brushl, 45, 380-2);
+                    clear = 0;
+                    //Stroke on/off
+                    fill(255,255,255);
+                    text("Stroke", 10, 390);
+                    stroke(0, 0, 0);
+                    rect(10, 395, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 395, 50, 405);
+                    fill(255,255,0);
+                    text(nstroke, 45, 420-2);
+                    //Stroke Colors
+                    fill(255, 255, 255);
+                    text("Stroke Colors", 10, 430);
+                    //Red
+                    fill(255, 0, 0);
+                    rect(10, 435, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 435, 50, 445);
+                    //Green
+                    fill(0, 255, 0);
+                    rect(10, 450, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 450, 50, 460);
+                    //Blue
+                    fill(0, 0, 255);
+                    rect(10, 465, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 465, 50, 475);
+                    fill(255, 255, 0);
+                    text("R-" + brushstroker + " G-" + brushstrokeg + " B-" + brushstrokeb, 5, 490);
+                    clear = 0;
+                    //Cursor Up/Down
+                    fill(255,255,255);
+                    text("Cursor Type", 10, 500);
+                    stroke(0, 0, 0);
+                    rect(10, 505, 80, 10);
+                    stroke(0, 0, 0);
+                    line(50, 505, 50, 515);
+                    fill(255,255,0);
+                    text(cursor, 45, 530-2);
+                  }
+                  
+                  void mousePressed() {
+                    if (mouseButton == LEFT) {
+                      //Click
+                      mp = 1;
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 90 && mouseY >= 190 && mouseY <= 200) {
+                      //Clear Button
+                      clear = 1;
+                    }  
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 115 && mouseY <= 125) {
+                      //Background R Button Left
+                      backgroundr -= diff;
+                      if (backgroundr < 0) {
+                        backgroundr = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 115 && mouseY <= 125) {
+                      //Background R Button Right
+                      backgroundr += diff;
+                      if (backgroundr > 255) {
+                        backgroundr = 0;
+                      }
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 130 && mouseY <= 140) {
+                      //Background G Button Left
+                      backgroundg -= diff;
+                      if (backgroundg < 0) {
+                        backgroundg = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 130 && mouseY <= 140) {
+                      //Background G Button Right
+                      backgroundg += diff;
+                      if (backgroundg > 255) {
+                        backgroundg = 0;
+                      }
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 145 && mouseY <= 155) {
+                      //Background B Button Left
+                      backgroundb -= diff;
+                      if (backgroundb < 0) {
+                        backgroundb = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 145 && mouseY <= 155) {
+                      //Background B Button Right
+                      backgroundb += diff;
+                      if (backgroundb > 255) {
+                        backgroundb = 0;
+                      }
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 90 && mouseY >= 215 && mouseY <= 225) {
+                      //Reset rect(10,215,80,10);
+                      //Brush Stuff
+                      brushw = brushwd;
+                      brushl = brushld;
+                      brushr = brushrd;
+                      brushg = brushgd;
+                      brushb = brushbd;
+                      brushf = 0;
+                      //Details
+                      nstroke = 0;
+                      thickness = thicknessd;
+                      athickness = athicknessd;
+                      brushstroker = brushstrokerd;
+                      brushstrokeg = brushstrokegd;
+                      brushstrokeb = brushstrokebd;
+                      //Modes
+                      cursor = cursord;
+                      //Background Stuff
+                      backgroundr = backgroundrd;
+                      backgroundg = backgroundgd;
+                      backgroundb = backgroundbd;
+                      backgroundf = 0;
+                      //HUDs
+                      huds = 1;
+                      hudw = 100;
+                      //Misc
+                      mp = 0;
+                      erase = 1;
+                      clear = 0;
+                      diff = 10;
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 240 && mouseY <= 250) {
+                      //Brush R Button Left rect(10, 240, 80, 10);
+                      brushr -= diff;
+                      if (brushr < 0) {
+                        brushr = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 240 && mouseY <= 250) {
+                      //Brush R Button Right
+                      brushr += diff;
+                      if (brushr > 255) {
+                        brushr = 0;
+                      }
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 255 && mouseY <= 265) {
+                      //Brush G Button Left
+                      brushg -= diff;
+                      if (brushg < 0) {
+                        brushg = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 255 && mouseY <= 265) {
+                      //Brush G Button Right
+                      brushg += diff;
+                      if (brushg > 255) {
+                        brushg = 0;
+                      }
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 270 && mouseY <= 280) {
+                      //Brush B Button Left
+                      brushb -= diff;
+                      if (brushb < 0) {
+                        brushb = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 270 && mouseY <= 280) {
+                      //Background B Button Right
+                      brushb += diff;
+                      if (brushb > 255) {
+                        brushb = 0;
+                      }
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 315 && mouseY <= 325) {
+                      //Brush Width Button Left rect(10, 315, 80, 10);
+                      brushw -= diff;
+                      if(brushw < 0){
+                        brushw = 0;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 315 && mouseY <= 325) {
+                      //Brush Width Button Right +40
+                      brushw += diff;
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 355 && mouseY <= 365) {
+                      //Brush length Button Left rect(10, 315, 80, 10);
+                      brushl -= diff;
+                      if(brushl < 0){
+                        brushl = 0;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 355 && mouseY <= 365) {
+                      //Brush length Button Right +40
+                      brushl += diff;
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 395 && mouseY <= 405) {
+                      //Stroke Left rect(10, 395, 80, 10);
+                      nstroke -= 1;
+                      if(nstroke < 0){
+                        nstroke = 0;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 395 && mouseY <= 405) {
+                      //Stroke Right
+                      nstroke += 1;
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 435 && mouseY <= 445) {
+                      //Background R Button Left
+                      brushstroker -= diff;
+                      if (brushstroker< 0) {
+                        brushstroker = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 435 && mouseY <= 445) {
+                      //Background R Button Right rect(10, 435, 80, 10);
+                       brushstroker+= diff;
+                      if (brushstroker > 255) {
+                         brushstroker= 0;
+                      }
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 450 && mouseY <= 460) {
+                      //Background G Button Left
+                      brushstrokeg -= diff;
+                      if (brushstrokeg < 0) {
+                         brushstrokeg = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 450 && mouseY <= 460) {
+                      //Background G Button Right
+                       brushstrokeg += diff;
+                      if (brushstrokeg > 255) {
+                         brushstrokeg= 0;
+                      }
+                    }
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 465 && mouseY <= 475) {
+                      //Background B Button Left
+                       brushstrokeb -= diff;
+                      if (brushstrokeb < 0) {
+                        brushstrokeb = 255;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 465 && mouseY <= 475) {
+                      //Background B Button Right
+                      brushstrokeb += diff;
+                      if (brushstrokeb > 255) {
+                         brushstrokeb= 0;
+                      }
+                    } 
+                    if (mouseButton == LEFT && mouseX >= 10 && mouseX <= 50 && mouseY >= 505 && mouseY <= 515) {
+                      //Cursor Left rect(10, 505, 80, 10);
+                      cursor -= 1;
+                      if(cursor < 0){
+                        cursor = 0;
+                      }
+                    }   
+                    if (mouseButton == LEFT && mouseX > 50 && mouseX <= 90 && mouseY >= 505 && mouseY <= 515) {
+                      //Cursor Right
+                      cursor += 1;
+                    }
+                    if (mouseButton == RIGHT) {
+                    }
+                  
+                    if (mouseButton == CENTER) {
+                      erase++;
+                    }
+                  }
+                  
+                  void mouseReleased() {
+                    if (mouseButton == LEFT) {
+                      mp = 0;
+                    }
+                  
+                    if (mouseButton == RIGHT) {
+                    }
+                  
+                    if (mouseButton == CENTER) {
+                    }
+                  }
+                  
+                  void keyPressed() {
+                    /*
+                    if(key == 'x' && key == 'X'){
+                     }
+                     */
+                  }
+                </script>
+              <canvas id = "pjs"></canvas>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          <!-- Space -->	
+		<div class="row">
+        <div class="col-md-12">
+          <br>
+          <br>
+        </div>
+      </div>
+  <!-- Space -->	
+  <!-- Description -->	
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10 text-center block-center content ">
+    <br>
+    <p class="contenttext">Click to paint and use side buttons.</p>
+    <p class="contenttext">Middle click to change into erase mode.</p>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+<!-- Description -->	
+<!-- Space -->	
+<div class="row">
+	<div class="col-md-12">
+		<br>
+		<br>
+	</div>
+</div>
+<!-- Space -->	
+        </div>
+<!-- Overlay -->
+<div id="myNav" class="overlay">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Back</a>
+	<div class="overlay-content">
+		<a href="../../index.html">Main Page</a>
+		<a href="../bkgrndpage/index.html">BKGRND</a>
+		<a href="" id="selected"><u>LSPaint</u></a>
+		<a href="../pingpage/index.html">Ping</a>
+		<a href="../galaxypage/index.html">Galaxy Intruders</a>
+		<a href="../c@rrionpage/index.html">C@rrion</a>
+		<a href="../panzerpage/index.html">Panzer Problems</a>
+		<!-- <a href="otherpages/oubliettepage/index.html">Oubliette</a> -->
+		<a href="../ping2page/index.html">Ping 2.0</a>
+	</div>
+</div>
+<!-- Overlay -->
+</body>
+</html>

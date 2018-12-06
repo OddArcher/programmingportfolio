@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Richard Czerniak Portfolio</title>
+    <!-- CSS Links-->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/w3.css">
+    <!-- JS Links-->
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script src="../../js/processing.min.js"></script>
+    <!-- Other Links-->
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Orbitron|Russo+One|VT323" rel="stylesheet">
+</head>
+<body>
+    <div class="container notbackground">
+        <!-- The Title -->
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <h1 id="headertext">Richard Czerniak</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-2"></div>	
+              <div class="col-md-2"></div>	
+              <div class="col-md-2 text-center block-center">
+                <h2 id="subheader" title="To The Pages" onclick="openNav()">Bkgrnd</h2>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2"></div>	
+              <div class="col-md-1"></div>	
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center block-center">
+                <hr>
+                <br>
+              </div>
+            </div>
+        <!-- The Title -->
+        <!-- First Section -->	
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10 text-center block-center content ">
+                <script type="application/processing" data-processing-target="pjs">
+                  int nspeed = 30;
+                  int nstart = 1;
+                  int nsize = 1000;
+                  int nrect = 0;
+                  int nellipse = 0;
+                  int ntriangle = 0;
+                  int nline = 0;
+                  int npoint = 0;
+                  int nbackground1 = 0;
+                  int nbackground2 = 0;
+                  int nmonochrome = 0;
+                  int ncolors = 1;
+                  
+                  void setup(){
+                    background(0,0,0);
+                    frameRate(nspeed);
+                    size(800,600);
+                  }
+                  
+                  void draw(){
+                  text("Made By Ricky", 450, 980);
+                  if(nstart == 1){
+                    if(nmonochrome == 1){
+                      if(nbackground1 == 1){
+                        background(0,0,0);
+                      }
+                      stroke(random(255));
+                      fill(random(255));
+                      if(nrect == 1){
+                        rect(random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(nellipse == 1){
+                        ellipse(random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(ntriangle == 1){
+                        triangle(random(nsize),random(nsize),random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(nline == 1){
+                        line(random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(npoint == 1){
+                        point(random(nsize),random(nsize));
+                      }
+                      if(nbackground2 == 1){
+                        background(0,0,0);
+                      }
+                    }
+                    
+                      if(ncolors == 1){
+                      if(nbackground1 == 1){
+                        background(0,0,0);
+                      }
+                      stroke(random(255),random(255),random(255));
+                      fill(random(255),random(255),random(255));
+                      if(nrect == 1){
+                        rect(random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(nellipse == 1){
+                        ellipse(random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(ntriangle == 1){
+                        triangle(random(nsize),random(nsize),random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(nline == 1){
+                        line(random(nsize),random(nsize),random(nsize),random(nsize));
+                      }
+                      if(npoint == 1){
+                        point(random(nsize),random(nsize));
+                      }
+                      if(nbackground2 == 1){
+                        background(0,0,0);
+                      }
+                    }
+                  }  
+                  }
+                  
+                  void keyPressed() {
+                    if(key == 'q' || key == 'Q'){
+                      if(nrect == 1){
+                        nrect = 0;
+                      }
+                      else {
+                        nrect = 1;
+                      }
+                    }
+                    if(key == 'w' || key == 'W'){
+                      if(nellipse == 1){
+                        nellipse = 0;
+                      }
+                      else {
+                        nellipse = 1;
+                      }
+                    }
+                    if(key == 'e' || key == 'E'){
+                      if(ntriangle == 1){
+                        ntriangle = 0;
+                      }
+                      else {
+                        ntriangle = 1;
+                      }
+                    }
+                    if(key == 'r' || key == 'R'){
+                      if(nline == 1){
+                        nline = 0;
+                      }
+                      else {
+                        nline = 1;
+                      }
+                    }
+                    if(key == 't' || key == 'T'){
+                      if(npoint == 1){
+                        npoint = 0;
+                      }
+                      else {
+                        npoint = 1;
+                      }
+                    }
+                    if(key == 'a' || key == 'A'){
+                    if(nbackground1 == 1){
+                        nbackground1 = 0;
+                      }
+                      else {
+                        nbackground1 = 1;
+                      }
+                    }
+                    if(key == 's' || key == 'S'){
+                      if(nbackground2 == 1){
+                        nbackground2 = 0;
+                      }
+                      else {
+                        nbackground2 = 1;
+                      }
+                    }
+                    if(key == 'd' || key == 'D'){
+                      if(nstart == 1){
+                        nstart = 0;
+                      }
+                      else {
+                        nstart = 1;
+                      }
+                    }
+                    if(key == 'z' || key == 'Z'){
+                    ncolors = 1;
+                    nmonochrome = 0;
+                    }
+                    if(key == 'x' || key == 'X'){
+                    ncolors = 0;
+                    nmonochrome = 1;
+                    }
+                  }
+                </script>
+              <canvas id = "pjs"></canvas>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          <!-- Space -->	
+		<div class="row">
+        <div class="col-md-12">
+          <br>
+          <br>
+        </div>
+      </div>
+  <!-- Space -->	
+   <!-- Description -->	
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-2 text-center block-center content ">
+    <p>Q - Squares On/Off</p>
+    <p>A - Back Layer</p>
+    <p>Z - Color On</p>
+  </div>
+  <div class="col-md-2 text-center block-center content ">
+    <p>W - Circles On/Off</p>
+    <p>S - Front Layer</p>
+    <p>X - Monochrome On</p>
+  </div>
+  <div class="col-md-2 text-center block-center content ">
+    <p>E - Triangles On/Off</p>
+    <p>D - Pause</p>
+    <span style="display:block; height:32px;"></span>
+  </div>
+  <div class="col-md-2 text-center block-center content ">
+    <p>R - Lines On/Off</p>
+    <span style="display:block; height:32px;"></span>
+    <span style="display:block; height:32px;"></span>
+  </div>
+  <div class="col-md-2 text-center block-center content ">
+    <span style="display:block; height:32px;"></span>
+    <span style="display:block; height:32px;"></span>
+    <span style="display:block; height:32px;"></span>
+  </div>
+	<div class="col-md-1"></div>
+</div>
+<!-- Description -->	
+<!-- Space -->	
+<div class="row">
+	<div class="col-md-12">
+		<br>
+		<br>
+	</div>
+</div>
+<!-- Space -->	
+        </div>
+<!-- Overlay -->
+<div id="myNav" class="overlay">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Back</a>
+	<div class="overlay-content">
+		<a href="../../index.html">Main Page</a>
+		<a href="" id="selected"><u>BKGRND</u></a>
+		<a href="../lsppage/index.html">LSPaint</a>
+		<a href="../pingpage/index.html">Ping</a>
+		<a href="../galaxypage/index.html">Galaxy Intruders</a>
+		<a href="../c@rrionpage/index.html">C@rrion</a>
+		<a href="../panzerpage/index.html">Panzer Problems</a>
+		<!-- <a href="otherpages/oubliettepage/index.html">Oubliette</a> -->
+		<a href="../ping2page/index.html">Ping 2.0</a>
+	</div>
+</div>
+<!-- Overlay -->
+</body>
+</html>
